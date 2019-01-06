@@ -1,0 +1,29 @@
+<% if @contests.any? %>
+	<table class="table table-hover table-sm mt-4">
+	  <thead class="thead-light">
+	    <tr>
+		  <th scope="col">#</th>
+	      <th scope="col">Name</th>
+		  <th scope="col">Current Stage</th>
+		  <th scope="col">Winner</th>
+		  <th scope="col"></th>
+	    </tr>
+	  </thead>
+	  <tbody>
+		<% @contests.each do |contest| %>
+		  <tr>
+		  	<td><%= contest.id %></td>
+		    <td><%= link_to contest.title, contest_path(contest) %></td>
+		    <td><%= contest.stages.first.stage_type %></td>
+		    <td><%= contest.winner.present? ? contest.winner : "to be determined" %></td>
+		    <td>
+		    	<%= button_to('Delete', contest_path(contest), data: {confirm: 'Are you sure?'}, method: :delete, class: "btn btn-danger")%>
+		  </tr>
+		<% end %>
+	  </tbody>
+	</table>
+<% else %> 
+	<div class="mt-2">
+		<i>No tournaments created</i>
+	</div>
+<% end %>

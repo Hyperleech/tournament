@@ -1,0 +1,18 @@
+<div class="row justify-content-md-center mt-5">
+  <div>	
+	<h3>Enter score</h3>
+	<% @game.errors[:game].each do |error| %>
+		<div class="alert alert-danger" role="alert">
+  			<%= error %>
+		</div>
+	<% end %>
+	<%= bootstrap_form_for(@game) do |f| %>
+		<% @game.participations.each do |part| %>
+			<%= f.fields_for :participations, part do |f| %>
+			<%= f.text_field :score, label: part.team.title + " score" %>
+			<% end %>
+		<% end %>
+	<%= f.submit "Save", class: 'btn btn-primary' %>
+	<% end %>
+  </div>
+</div>

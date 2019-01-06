@@ -1,0 +1,23 @@
+<div class="row justify-content-md-center mt-5">
+	<h2><%= @contest.title %></h2>
+</div>
+<div class="row justify-content-md-center mt-5">
+	<% @contest.stages.each do |stage| %>
+		<%= render "generate_button", stage: stage %>
+	<% end %>
+	<%= button_to('Delete', contest_path(@contest), data: {confirm: 'Are you sure?'}, method: :delete, class: "btn btn-danger")%>
+</div>
+
+<div class="row justify-content-md-center mt-5">
+	<div class="col-lg-4">
+		<%= render "stages/division", stage: @contest.group_stages[0] %>
+	</div>
+	<div class="col-lg-4">
+		<%= render "stages/playoff", stage: @contest.quarter_stage, size: 4, name: "Quarter Finals" %>
+		<%= render "stages/playoff", stage: @contest.semi_stage, 	size: 2, name: "Semi Finals" %>
+		<%= render "stages/playoff", stage: @contest.final_stage, 	size: 1, name: "Final" %>
+	</div>
+	<div class="col-lg-4">
+		<%= render "stages/division", stage: @contest.group_stages[1] %>
+	</div>
+</div>

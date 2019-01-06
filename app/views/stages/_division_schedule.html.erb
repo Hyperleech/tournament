@@ -1,0 +1,25 @@
+<table class="table table-hover table-sm">
+  <thead class="thead-light">
+    <tr>
+	  <th scope="col">#</th>
+      <th scope="col">Team 1</th>
+	  <th scope="col">Result</th>
+	  <th scope="col">Team 2</th>
+	  <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+	<% stage.games.each_with_index  do |game, i| %>
+	  <tr>
+	  	<td><%= i+1 %></td>
+	    <td><%= game.participations[0].team.title %></td>
+	    <td><%= game.participations[0].score %> : <%= game.participations[1].score %></td>
+	    <td><%= game.participations[1].team.title%></td>
+	    <td>
+	    	<% if !game.played %>
+	    		<%= button_to('play', edit_game_path(game), method: :get, class: "btn btn-info") %></td>
+	    	<% end %>
+	  </tr>
+	<% end %>
+  </tbody>
+</table>

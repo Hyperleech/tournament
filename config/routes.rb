@@ -1,3 +1,9 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  get 'stages/auto_generate'
+	get 'welcome/index'
+
+	resources :contests 
+	resources :games, only: [:edit, :update]
+	
+	root 'welcome#index'
 end
