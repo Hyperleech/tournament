@@ -4,6 +4,10 @@ class Participation < ApplicationRecord
 
 	validates_numericality_of :score
 
+	def title
+		team.title
+	end
+
 	def won
 		return unless played
 		score > opposition_score

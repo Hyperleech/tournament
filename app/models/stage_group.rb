@@ -1,11 +1,7 @@
 class StageGroup < Stage
 
 	STAGE_TYPE = 'Division'
-
-	def sorted_teams
-		@sorted_teams ||= teams.sort_by(&:group_points).reverse
-	end
-
+	
 	private
 
 	def init_schedule

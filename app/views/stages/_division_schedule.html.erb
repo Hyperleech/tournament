@@ -12,9 +12,9 @@
 	<% stage.games.each_with_index  do |game, i| %>
 	  <tr>
 	  	<td><%= i+1 %></td>
-	    <td><%= game.participations[0].team.title %></td>
+	    <td><%= game.participations[0].title %></td>
 	    <td><%= game.participations[0].score %> : <%= game.participations[1].score %></td>
-	    <td><%= game.participations[1].team.title%></td>
+	    <td><%= game.participations[1].title %></td>
 	    <td>
 	    	<% if !game.played %>
 	    		<%= button_to('play', edit_game_path(game), method: :get, class: "btn btn-info") %></td>

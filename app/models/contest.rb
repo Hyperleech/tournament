@@ -2,10 +2,6 @@ class Contest < ApplicationRecord
 	has_many :teams,   dependent: :destroy
 	has_many :games,   dependent: :destroy
 	has_many :stages,  dependent: :destroy
-	has_many :group_stages, -> { where stage_type: StageGroup::STAGE_TYPE }, class_name: "StageGroup"
-	has_one  :quarter_stage, -> { where stage_type: StageQuarter::STAGE_TYPE }, class_name: "StageQuarter"
-	has_one  :semi_stage, -> { where stage_type: StageSemi::STAGE_TYPE }, class_name: "StageSemi"
-	has_one  :final_stage, -> { where stage_type: StageFinal::STAGE_TYPE }, class_name: "StageFinal"
 
 	accepts_nested_attributes_for :teams
 
@@ -20,6 +16,22 @@ class Contest < ApplicationRecord
 		if stage_finished?(stage.stage_type) && !stage.stage_final?
 			create_next_stage(get_next_stage(stage.stage_type))
 		end
+	end
+
+	def group_stages
+		stage_of(StageGroup::STAGE_TYPE)
+	end
+
+	def quarter_stage
+		stage_of(StageQuarter::STAGE_TYPE).first
+	end
+
+	def semi_stage
+		stage_of(StageSemi::STAGE_TYPE).first
+	end
+
+	def final_stage
+		stage_of(StageFinal::STAGE_TYPE).first
 	end
 
 	def winner
@@ -41,6 +53,10 @@ class Contest < ApplicationRecord
 
 	def create_next_stage(next_stage)
 		Object.const_get(next_stage).create(contest_id: id)	
+	end
+
+	def stage_of(type)
+		stages.select{|s| s.stage_type == type}
 	end
 
 	def get_next_stage(stage_type)

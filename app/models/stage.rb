@@ -31,6 +31,10 @@ class Stage < ApplicationRecord
 		"Division B"
 	end
 
+	def sorted_teams
+		@sorted_teams ||= teams.sort_by(&:group_points).reverse
+	end
+
 	private
 
 	def games_to_play

@@ -15,7 +15,7 @@ class ContestsController < ApplicationController
 	end
 
 	def show
-		@contest = Contest.find(params[:id])
+		@contest = get_contest
 		@contest.reload if @contest.check_if_create_next_stage
 	end
 
@@ -38,5 +38,9 @@ class ContestsController < ApplicationController
 
 	def safe_params
 		params.require(:contest).permit(:title, teams_attributes: [:title])
+	end
+
+	def get_contest
+		Contest.where(id: params[:id]).includes(stages: [ teams: [:participations], games: [:participations]]).first
 	end
 end
